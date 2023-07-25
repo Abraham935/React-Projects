@@ -1,4 +1,5 @@
 import {useState, useEffect} from "react"
+import Error from "./Error";
 
 function Formulario({patients, setPatients}) {
   const [name, setName] = useState('');
@@ -55,13 +56,7 @@ function Formulario({patients, setPatients}) {
           className="bg-white shadow-md rounded-lg py-10 px-5">
 
           
-          {error && 
-            <div className=" bg-red-800 text-white text-center p-3 uppercase font-bold mb-3 rounded-md">
-              <p>All fields need to be fill</p>
-
-            </div>
-          
-          }
+          {error && <Error message={'All fields need to be fill'} /> }
 
           <div className="mb-5">
             <label htmlFor="pet" className="block text-gray-700 uppercase">Pet´s name</label>
