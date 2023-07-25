@@ -1,12 +1,22 @@
 import Header from "./components/Header"
 import Formulario from "./components/Formulario"
 import PatientsList from "./components/PatientsList"
-import {useState} from "react"
+import {useState, useEffect} from "react"
 
 function App() {
   const [patients, setPatients] = useState([]);
+  const [patient, setPatient] = useState({});
 
-  console.log(patients)
+  const deletePatient = (id) => {
+    const updatedPatients = patients.filter(patient => patient.id !== id);
+
+    setPatients(updatedPatients)
+  }
+
+  useEffect(() => {
+    localStorage.setItem('patients', JSON.stringify(patients))
+
+  }, [patients])
   
   return (
     <div className="container mx-auto mt-20">
@@ -15,9 +25,13 @@ function App() {
         <Formulario
           patients={patients} 
           setPatients={setPatients}
+          patient={patient}
+          setPatient={setPatient}
         />
         <PatientsList 
           patients={patients}
+          setPatient={setPatient}
+          deletePatient={deletePatient}
         />
       </div>
     </div>

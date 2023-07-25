@@ -1,7 +1,7 @@
 import {useState, useEffect} from "react"
 import Error from "./Error";
 
-function Formulario({patients, setPatients}) {
+function Formulario({patients, setPatients, patient, setPatient}) {
   const [name, setName] = useState('');
   const [owner, setOwner] = useState('');
   const [email, setEmail] = useState('');
@@ -9,6 +9,16 @@ function Formulario({patients, setPatients}) {
   const [symptoms, setSymptoms] = useState('');
   
   const [error, setError] = useState(false)
+
+  useEffect(() => {
+    if(Object.keys(patient).length > 0){
+      setName(patient.name);
+      setOwner(patient.owner);
+      setEmail(patient.email);
+      setDate(patient.date);
+      setSymptoms(patient.symptoms)
+    }
+  }, [patient])
 
   const generateId = () => {
     const random = Math.random().toString(36).substring(2);
@@ -38,9 +48,21 @@ function Formulario({patients, setPatients}) {
         id: generateId()
       }
 
+      if(patient.id) {
+        //New record
+        patientObject.id = patient.id;
 
-      setPatients([...patients, patientObject])
+        const updatedPatients = patients.map(patientState => patientState.id === patient.id ? patientObject : patientState);
 
+        setPatients(updatedPatients)
+        setPatient({})
+
+
+      } else {
+        //Existing record
+        patientObject.id = generateId();
+        setPatients([...patients, patientObject])
+      }
       //Reset form
 
       setName('');
@@ -131,7 +153,7 @@ function Formulario({patients, setPatients}) {
           <input 
             type="submit"
             className="uppercase bg-indigo-600 w-full p-3 text-white font-bold hover:bg-indigo-700 transition-all"
-            value="Add pacient"
+            value={patient.id ? 'Update patient' : 'Add patient'}
           />
 
 
