@@ -7,23 +7,35 @@ function PatientsList({ patients }) {
 
   return (
     <div className="md:w-1/2  lg:w-3/5 ">
-      <h2 className="font-black text-3xl text-center">Listado Pacientes</h2>
-      <p className=" text-xl mt-5 mb-10 text-center">
-        Manage your {''}
-        <span className="text-indigo-600 font-bold">Patients and Dates</span>
+      {patients && patients.length ? (
+        <>
+          <h2 className="font-black text-3xl text-center">Listado Pacientes</h2>
+          <p className=" text-xl mt-5 mb-10 text-center">
+            Manage your {''}
+            <span className="text-indigo-600 font-bold">Patients and Dates</span>
+          </p>
 
-      </p>
+        <div className=" md:h-screen overflow-y-scroll">
+          {patients.map( (patient) => {
 
-      <div className=" md:h-screen overflow-y-scroll">
-        {patients.map( (patient) => {
-
-          return (
-            <Patient
-              patient={patient}
-            />
-          )
-        })}
-      </div>
+            return (
+              <Patient
+                key={patient.id}
+                patient={patient}
+              />
+            )
+          })}
+        </div>
+        </>
+      ) : (
+        <>
+          <h2 className="font-black text-3xl text-center">Listado Pacientes</h2>
+            <p className=" text-xl mt-5 mb-10 text-center">
+              Start adding patients {''}
+              <span className="text-indigo-600 font-bold">and they appear below</span>
+            </p>
+        </>
+      ) }
 
       
 
