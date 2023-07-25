@@ -1,6 +1,10 @@
+/* eslint-disable react/jsx-key */
 import { Patient } from "./Patient"
 
-function PatientsList() {
+// eslint-disable-next-line react/prop-types
+function PatientsList({ patients }) {
+  console.log(patients)
+
   return (
     <div className="md:w-1/2  lg:w-3/5 ">
       <h2 className="font-black text-3xl text-center">Listado Pacientes</h2>
@@ -11,11 +15,14 @@ function PatientsList() {
       </p>
 
       <div className=" md:h-screen overflow-y-scroll">
-        <Patient />
-        <Patient />
-        <Patient />
-        <Patient />
-        <Patient />
+        {patients.map( (patient) => {
+
+          return (
+            <Patient
+              patient={patient}
+            />
+          )
+        })}
       </div>
 
       
