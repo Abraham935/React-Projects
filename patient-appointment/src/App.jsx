@@ -4,7 +4,7 @@ import PatientsList from "./components/PatientsList"
 import {useState, useEffect} from "react"
 
 function App() {
-  const [patients, setPatients] = useState([]);
+  const [patients, setPatients] = useState(JSON.parse(localStorage.getItem('patients')) ?? []);
   const [patient, setPatient] = useState({});
 
   const deletePatient = (id) => {
