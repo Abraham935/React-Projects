@@ -1,10 +1,17 @@
 import { useState } from 'react'
 import Header from './components/Header'
+import NewExpenseIcon from './img/nuevo-gasto.svg'
+import Modal from './components/Modal';
 
 function App() {
 
   const [budget, setBudget] = useState(0);
   const [validBudget, setValidBudget] = useState(false);
+  const [modal, setModal] = useState(false);
+
+  const handleNewExpense = () => {
+    setModal(true)
+  }
 
 
   return (
@@ -15,6 +22,21 @@ function App() {
         validBudget={validBudget}
         setValidBudget={setValidBudget} 
       />
+
+      {validBudget && (<div className='nuevo-gasto'>
+        <img
+          src={NewExpenseIcon}
+          alt='New expense icon'
+          onClick={handleNewExpense}
+        />
+      </div>
+      )}
+
+      {modal && 
+        <Modal
+          setModal={setModal}       
+        />
+      }
     </div>
   )
 }
