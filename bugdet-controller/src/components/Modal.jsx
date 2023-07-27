@@ -1,15 +1,29 @@
 import { useState } from 'react'
 import CloseModalIcon from '../img/cerrar.svg'
+import Message from './Message';
 
-const Modal = ( {setModal, animationModal, setAnimationModal}) => {
+const Modal = ( {setModal, animationModal, setAnimationModal, saveExpense}) => {
 
     const [name, setName] = useState('');
     const [cost, setCost] = useState('');
     const [category, setCategory] = useState('');
+    const [message, setMessage] = useState('')
 
+    const handleSubmit = e => {
+        e.preventDefault();
+        if([name, cost, category].includes('')){
+            setMessage('One field is empty');
 
+            setTimeout(() => {
+                setMessage('');
+            }, 500)
 
-    
+            return;
+        }
+
+        saveExpense({name, cost, category})
+    } 
+
     const closeModal = () => {
         setAnimationModal(false)
 
@@ -30,8 +44,12 @@ const Modal = ( {setModal, animationModal, setAnimationModal}) => {
                 />
             </div>
 
-            <form className={`formulario ${animationModal ? "animar" : "cerrar" }`}>
+            <form 
+                className={`formulario ${animationModal ? "animar" : "cerrar" }`}
+                onSubmit={handleSubmit}
+            >
                 <legend>New expense</legend>
+                {message && <Message type="error">{message}</Message>}
 
                 <div className='campo'>
                     <label htmlFor='name'>Expense Name</label>
