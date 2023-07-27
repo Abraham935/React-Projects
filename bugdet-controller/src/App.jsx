@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import Header from './components/Header'
 import Modal from './components/Modal';
+import ExpensesList from './components/ExpensesList';
 import { generateID } from './helpers';
 
 import NewExpenseIcon from './img/nuevo-gasto.svg'
@@ -13,6 +14,7 @@ function App() {
 
   const [modal, setModal] = useState(false);
   const [animationModal, setAnimationModal] = useState(false)
+
   const [expenses, setExpenses] = useState([])
 
   const handleNewExpense = () => {
@@ -24,18 +26,17 @@ function App() {
     }, 500)
   }
 
-  const saveExpense = (expense => {
+  const saveExpense = expense => {
     expense.id = generateID();
-    console.log(expense)
-    setExpenses([...expenses, expense])
+    expense.date = Date.now();
+    setExpenses([...expenses, expense ])
 
-    setAnimationModal(false)
+    console.log(expenses)
 
-    setTimeout(() => {
-        setModal(false)
   
-      }, 500)
-  })
+
+    
+  }
 
 
   return (
@@ -47,13 +48,22 @@ function App() {
         setValidBudget={setValidBudget} 
       />
 
-      {validBudget && (<div className='nuevo-gasto'>
-        <img
-          src={NewExpenseIcon}
-          alt='New expense icon'
-          onClick={handleNewExpense}
-        />
-      </div>
+      {validBudget && (
+        <>
+          <main>
+            <ExpensesList 
+              expenses={expenses}
+            />
+          </main>
+
+          <div className='nuevo-gasto'>
+            <img
+              src={NewExpenseIcon}
+              alt='New expense icon'
+              onClick={handleNewExpense}
+            />
+          </div>
+        </>
       )}
 
       {modal && 
