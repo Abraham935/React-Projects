@@ -1,6 +1,6 @@
 import Expense from "./Expense"
 
-const ExpensesList = ( {expenses}) => {
+const ExpensesList = ( {expenses, setEditExpense, deleteExpense}) => {
 
 
     return (
@@ -10,7 +10,9 @@ const ExpensesList = ( {expenses}) => {
             {expenses.map ( expense => (
                 <Expense
                 key={expense.id}
-                expense={expense} 
+                expense={expense}
+                setEditExpense={setEditExpense} 
+                deleteExpense={deleteExpense}
                 />
             ))}
         </div>

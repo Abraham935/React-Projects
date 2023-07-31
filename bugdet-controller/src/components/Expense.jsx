@@ -35,11 +35,11 @@ const iconsDictionary = {
 
 }
 
-const Expense = ( {expense} ) => {
+const Expense = ( {expense, setEditExpense, deleteExpense} ) => {
 
     const leadingActions = () => (
         <LeadingActions>
-            <SwipeAction onClick={() => console.log('Edit')}>
+            <SwipeAction onClick={() => setEditExpense(expense)}>
                 Edit
             </SwipeAction>
 
@@ -48,7 +48,7 @@ const Expense = ( {expense} ) => {
 
     const trailingActions = () => (
         <TrailingActions>
-            <SwipeAction onClick={() => console.log('Delete')}>
+            <SwipeAction onClick={() => deleteExpense(expense.id)} destructive={true}>
                 Delete
             </SwipeAction>
 

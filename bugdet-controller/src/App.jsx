@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import Header from './components/Header'
 import Modal from './components/Modal';
@@ -17,10 +17,22 @@ function App() {
 
   const [expenses, setExpenses] = useState([])
 
-  const [editExpense, setEditExpense] = [{}]
+  const [editExpense, setEditExpense] = useState({})
+
+  useEffect(() => {
+    if(Object.keys(editExpense).length > 0){
+      setModal(true)
+
+      setTimeout(() => {
+      setAnimationModal(true);
+
+    }, 500)
+    }
+  }, [editExpense])
 
   const handleNewExpense = () => {
     setModal(true)
+    setEditExpense({})
 
     setTimeout(() => {
       setAnimationModal(true);
@@ -28,15 +40,27 @@ function App() {
     }, 500)
   }
 
+  const deleteExpense= (id) => {
+    const expensesUpdated = expenses.filter(expense => expense.id !== id)
+
+    setExpenses(expensesUpdated);
+
+  }
+
   const saveExpense = expense => {
-    expense.id = generateID();
-    expense.date = Date.now();
-    setExpenses([...expenses, expense ])
+
+    if(expense.id) {
+      const updatedExpenses = expenses.map(expenseState => expenseState.id === expense.id ? expense : expenseState )
+      setExpenses(updatedExpenses);
+
+    } else {
+      expense.id = generateID();
+      expense.date = Date.now();
+      setExpenses([...expenses, expense ])
+      
+    }
 
     console.log(expenses)
-
-  
-
     
   }
 
@@ -56,6 +80,8 @@ function App() {
           <main>
             <ExpensesList 
               expenses={expenses}
+              setEditExpense={setEditExpense}
+              deleteExpense={deleteExpense}
             />
           </main>
 
@@ -74,7 +100,8 @@ function App() {
           setModal={setModal}
           animationModal={animationModal}
           setAnimationModal={setAnimationModal}
-          saveExpense={saveExpense}       
+          saveExpense={saveExpense}
+          editExpense={editExpense}       
         />
       }
     </div>

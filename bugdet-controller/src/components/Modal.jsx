@@ -1,13 +1,26 @@
-import { useState } from 'react'
+/* eslint-disable react/prop-types */
+import { useState, useEffect } from 'react'
 import CloseModalIcon from '../img/cerrar.svg'
 import Message from './Message';
 
-const Modal = ( {setModal, animationModal, setAnimationModal, saveExpense}) => {
+const Modal = ( {setModal, animationModal, setAnimationModal, saveExpense, editExpense}) => {
 
     const [name, setName] = useState('');
     const [cost, setCost] = useState('');
     const [category, setCategory] = useState('');
     const [message, setMessage] = useState('')
+    const [id, setId] = useState('')
+    const [date, setDate] = useState('')
+
+    useEffect(() => {
+        if(Object.keys(editExpense).length > 0 ){
+            setName(editExpense.name)
+            setCost(editExpense.cost)
+            setCategory(editExpense.category)
+            setId(editExpense.id)
+            setDate(editExpense.date)
+        }
+    }, [])
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -21,7 +34,7 @@ const Modal = ( {setModal, animationModal, setAnimationModal, saveExpense}) => {
             return;
         }
 
-        saveExpense({name, cost, category})
+        saveExpense({name, cost, category, id, date})
         closeModal();
     } 
 
@@ -49,7 +62,7 @@ const Modal = ( {setModal, animationModal, setAnimationModal, saveExpense}) => {
                 className={`formulario ${animationModal ? "animar" : "cerrar" }`}
                 onSubmit={handleSubmit}
             >
-                <legend>New expense</legend>
+                <legend>{editExpense.name ? 'Edit Expense' : 'New Expense'}</legend>
                 {message && <Message type="error">{message}</Message>}
 
                 <div className='campo'>
@@ -94,7 +107,7 @@ const Modal = ( {setModal, animationModal, setAnimationModal, saveExpense}) => {
 
                 <input
                     type="submit"
-                    value="Add Expense"
+                    value={editExpense.name ? 'Save Changes' : 'Add Expense'}
                 />
 
 
