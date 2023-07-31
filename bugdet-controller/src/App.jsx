@@ -17,6 +17,8 @@ function App() {
 
   const [expenses, setExpenses] = useState([])
 
+  const [editExpense, setEditExpense] = [{}]
+
   const handleNewExpense = () => {
     setModal(true)
 
@@ -40,8 +42,9 @@ function App() {
 
 
   return (
-    <div>
+    <div className={modal ? 'fijar' : ''}>
       <Header
+        expenses={expenses}
         budget={budget}
         setBudget={setBudget}
         validBudget={validBudget}

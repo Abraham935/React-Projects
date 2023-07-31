@@ -22,6 +22,7 @@ const Modal = ( {setModal, animationModal, setAnimationModal, saveExpense}) => {
         }
 
         saveExpense({name, cost, category})
+        closeModal();
     } 
 
     const closeModal = () => {
@@ -81,10 +82,10 @@ const Modal = ( {setModal, animationModal, setAnimationModal, saveExpense}) => {
                         onChange={e => setCategory(e.target.value)}
                     >
                         <option value="">-- Select --</option>
-                        <option value="saving">Saving</option>
-                        <option value="food">Food</option>
-                        <option value="home">Home</option>
-                        <option value="fun">Fun</option>
+                        <option value="Saving">Saving</option>
+                        <option value="Food">Food</option>
+                        <option value="Home">Home</option>
+                        <option value="Fun">Fun</option>
                         <option value="Health">Health</option>
                         <option value="Subscriptions">Subscriptions</option>
                         
